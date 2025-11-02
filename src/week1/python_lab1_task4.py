@@ -13,26 +13,46 @@ Use helper functions:
 Print formatted summary in main.
 """
 
+import re
+
 def count_characters(text):
     """Count non-space characters in a string."""
-    # TODO: implement
-    pass
+    return sum(1 for char in text if not char.isspace())
 
 def count_words(text):
     """Count number of words in a string."""
-    # TODO: implement
-    pass
+    return len(text.split())
 
 def extract_numbers(text):
     """Return list of integers found in text."""
-    # TODO: implement
-    pass
+    matches = re.findall(r"-?\d+", text)
+    return [int(match) for match in matches]
 
 def analyze_text(text):
     """Perform text-based arithmetic analysis."""
-    # TODO: call helper functions and compute total, average, etc.
-    pass
+    char_count = count_characters(text)
+    word_count = count_words(text)
+    numbers = extract_numbers(text)
+    total = sum(numbers)
+    average = total / len(numbers) if numbers else None
+
+    return {
+        "char_count": char_count,
+        "word_count": word_count,
+        "numbers": numbers,
+        "sum": total,
+        "average": average,
+    }
 
 if __name__ == "__main__":
-    # TODO: read input, call analyze_text(), and print results
-    pass
+    user_text = input("Enter text to analyze: ")
+    results = analyze_text(user_text)
+
+    print(f"Non-space characters: {results['char_count']}")
+    print(f"Word count: {results['word_count']}")
+    print(f"Numbers found: {results['numbers']}")
+    print(f"Sum of numbers: {results['sum']}")
+    if results["average"] is not None:
+        print(f"Average of numbers: {results['average']:.2f}")
+    else:
+        print("Average of numbers: N/A")
